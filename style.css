@@ -1,0 +1,423 @@
+/* ==========================================================================
+   1. Base Core Design System & Welcome Card Layouts
+   ========================================================================== */
+body, html {
+    background-color: #0b111e;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #fff; margin: 0; padding: 0; height: 100%; overflow: hidden;
+}
+.app-screen {
+    width: 100%; height: 100dvh; display: none; flex-direction: column;
+}
+.login-body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    display: flex; align-items: center; justify-content: center;
+}
+.login-card {
+    background-color: #111827; border: 1px solid #1f2937; border-radius: 24px;
+    padding: 32px 24px; width: 88%; max-width: 360px; text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); box-sizing: border-box;
+}
+.messenger-logo {
+    width: 64px; height: 64px; color: #00f2fe; margin: 0 auto 16px auto;
+}
+.login-title { font-size: 28px; font-weight: 800; margin: 0 0 6px 0; }
+.login-subtitle { font-size: 13px; color: #64748b; margin: 0 0 28px 0; }
+.input-group { text-align: left; margin-bottom: 16px; width: 100%; }
+.input-group label { display: block; font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 6px; }
+.input-group input {
+    width: 100%; padding: 12px 14px; background-color: #1f2937; border: 1px solid #374151;
+    border-radius: 12px; color: #fff; outline: none; font-size: 14px; box-sizing: border-box;
+}
+.btn-signin {
+    width: 100%; padding: 12px; background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+    border: none; border-radius: 12px; color: #fff; font-size: 15px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 4px 12px rgba(0, 114, 255, 0.3); box-sizing: border-box;
+}
+.btn-google {
+    width: 100%; padding: 12px; background-color: #fff; border: none; border-radius: 12px;
+    color: #1f2937; font-size: 14px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px; box-sizing: border-box;
+}
+.google-icon { width: 18px; height: 18px; }
+.or-separator { display: flex; align-items: center; text-align: center; color: #475569; font-size: 12px; font-weight: 700; margin: 16px 0; }
+.or-separator::before, .or-separator::after { content: ''; flex: 1; border-bottom: 1px solid #1f2937; }
+.or-separator span { padding: 0 10px; }
+.form-links { display: flex; justify-content: center; gap: 8px; font-size: 13px; margin-top: 16px; }
+.link-blue { color: #38bdf8; text-decoration: none; font-weight: 500; }
+.divider { color: #334155; }
+/* ==========================================================================
+   2. Side Drawer Navigation Menu Modules
+   ========================================================================== */
+.side-drawer {
+    position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
+    background-color: #111827; border-right: 1px solid #1f2937; z-index: 150;
+    transition: left 0.3s ease; box-sizing: border-box; padding: 20px;
+}
+.side-drawer.open { left: 0; }
+.drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid #1f2937; padding-bottom: 12px; }
+.drawer-header h3 { margin: 0; font-size: 18px; color: #fff; }
+.close-btn { background: none; border: none; color: #64748b; font-size: 18px; cursor: pointer; }
+.drawer-menu-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.drawer-menu-list li a { display: block; padding: 12px 14px; color: #cbd5e1; text-decoration: none; border-radius: 10px; font-size: 15px; font-weight: 500; }
+.drawer-menu-list li a:hover { background-color: #1f2937; color: #38bdf8; }
+.logout-link { color: #ef4444 !important; }
+.menu-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 100; display: none; }
+.menu-backdrop.active { display: block; }
+
+/* ==========================================================================
+   3. Meta Navigation Top Header & Inbox Dashboard
+   ========================================================================== */
+.meta-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background-color: #111827; border-bottom: 1px solid #1f2937; height: 56px; box-sizing: border-box; }
+.menu-trigger { display: flex; flex-direction: column; gap: 4px; cursor: pointer; width: 20px; }
+.menu-trigger span { display: block; width: 100%; height: 2px; background-color: #94a3b8; border-radius: 1px; }
+.left-head { display: flex; align-items: center; gap: 12px; }
+.header-profile-img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+.middle-head { flex: 1; max-width: 480px; margin: 0 12px; }
+.search-box { display: flex; align-items: center; background-color: #1f2937; border-radius: 18px; padding: 6px 12px; border: 1px solid #27272a; }
+.search-icon { font-size: 12px; margin-right: 6px; }
+.search-box input { width: 100%; background: none; border: none; outline: none; color: #fff; font-size: 13px; }
+.noti-btn { background: none; border: none; font-size: 18px; cursor: pointer; position: relative; padding: 4px; }
+.noti-badge { position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; background-color: #ef4444; border-radius: 50%; }
+.chat-list-container { padding: 8px 0; }
+.chat-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; border-bottom: 1px solid #111827; }
+.chat-item:hover { background-color: #111827; }
+.chat-avatar { position: relative; width: 48px; height: 48px; flex-shrink: 0; }
+.chat-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.online-indicator { position: absolute; bottom: 1px; right: 1px; width: 10px; height: 10px; background-color: #10b981; border: 2px solid #0b111e; border-radius: 50%; }
+.chat-info { flex: 1; min-width: 0; }
+.chat-name-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+.chat-name-row h3 { margin: 0; font-size: 15px; font-weight: 600; color: #f1f5f9; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat-time { font-size: 11px; color: #64748b; flex-shrink: 0; }
+.chat-msg-row { display: flex; justify-content: space-between; align-items: center; }
+.chat-preview { margin: 0; font-size: 13px; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.unread-badge { background-color: #0072ff; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 10px; min-width: 8px; text-align: center; }
+/* ==========================================================================
+   4. Chat Room Bubble Elements & Anti-Abuse Row Grid Systems
+   ========================================================================== */
+.back-btn { background: none; border: none; color: #4facfe; cursor: pointer; display: flex; align-items: center; padding: 4px; }
+.back-btn svg { width: 22px; height: 22px; }
+.msg-row { display: flex; width: 100%; margin-bottom: 4px; box-sizing: border-box; }
+.msg-incoming { justify-content: flex-start; text-align: left; }
+.msg-outgoing { justify-content: flex-end; text-align: right; }
+.msg-bubble-container { display: flex !important; flex-direction: column !important; max-width: 75% !important; gap: 4px !important; }
+.msg-incoming .msg-bubble-container { align-items: flex-start; }
+.msg-outgoing .msg-bubble-container { align-items: flex-end; }
+.msg-bubble { padding: 10px 14px; font-size: 14px; border-radius: 18px; line-height: 1.4; word-break: break-word; cursor: pointer; display: inline-block; }
+.msg-incoming .msg-bubble { background-color: #1f2937; color: #f1f5f9; border-top-left-radius: 4px; }
+.msg-outgoing .msg-bubble { background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); color: #fff; border-top-right-radius: 4px; box-shadow: 0 2px 8px rgba(0, 114, 255, 0.2); text-align: left; }
+.msg-time { font-size: 10px; color: #475569; padding: 0 4px; margin-top: 1px; }
+.chat-date-separator { text-align: center; font-size: 11px; font-weight: 600; color: #475569; margin: 8px 0; text-transform: uppercase; width: 100%; }
+
+.chat-input-bar {
+    display: grid !important; grid-template-columns: auto auto 1fr auto !important;
+    align-items: center !important; gap: 12px !important; padding: 10px 14px !important;
+    background-color: #111827 !important; box-sizing: border-box !important; width: 100% !important;
+}
+.input-action-btn {
+    background: none !important; border: none !important; color: #38bdf8 !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    padding: 0 !important; margin: 0 !important; cursor: pointer !important; width: 24px !important; height: 24px !important;
+}
+.send-btn-neon { color: #00f2fe !important; width: 28px !important; height: 28px !important; }
+.message-input-wrapper {
+    background-color: #1f2937 !important; border-radius: 20px !important; padding: 8px 14px !important;
+    border: 1px solid #374151 !important; display: flex !important; align-items: center !important; box-sizing: border-box !important; width: 100% !important;
+}
+.message-input-wrapper input {
+    width: 100% !important; background: none !important; border: none !important; outline: none !important;
+    color: #ffffff !important; font-size: 14px !important; padding: 0 !important; margin: 0 !important;
+}
+
+/* ==========================================================================
+   5. Settings Dashboard Panels, Modals Layouts, & Action Sheet Overlays
+   ========================================================================== */
+.profile-screen, .about-screen, .privacy-screen, .help-screen { background-color: #0b111e; box-sizing: border-box; }
+.profile-hdr { display: grid !important; grid-template-columns: 40px 1fr 40px !important; align-items: center !important; height: 60px !important; padding: 0 16px !important; background-color: #111827 !important; border-bottom: 1px solid #1f2937 !important; }
+.profile-hdr-title { font-size: 16px !important; font-weight: 700 !important; margin: 0 !important; color: #fff !important; text-align: center !important; }
+.profile-main, .about-main, .privacy-main, .help-main { flex: 1; overflow-y: auto; padding: 24px 16px; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; width: 100%; }
+.profile-avatar-wrapper { position: relative; width: 100px; height: 100px; border-radius: 50%; border: 3px solid #00f2fe; box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); margin-bottom: 16px; flex-shrink: 0; }
+.profile-avatar-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.profile-user-name { font-size: 20px; font-weight: 700; color: #f1f5f9; margin: 0 0 4px 0; }
+.profile-user-email { font-size: 13px; color: #64748b; margin: 0 0 32px 0; }
+.profile-options-list { width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+.profile-opt-btn { width: 100%; background-color: #111827; border: 1px solid #1f2937; padding: 14px 16px; border-radius: 12px; color: #e2e8f0; font-size: 15px; font-weight: 500; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+.profile-footer-btn { width: 100%; max-width: 360px; margin-top: auto; padding: 14px; }
+.about-brand-box, .about-security-box-fixed, .privacy-conduct-box, .help-form-container { background-color: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 24px; width: 100%; max-width: 360px; box-sizing: border-box; }
+.about-logo { width: 56px; height: 50px; margin: 0 auto 16px auto !important; }
+.about-brand-box h3 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; text-align: center; }
+.about-version { font-size: 14px; color: #64748b; margin-bottom: 20px; text-align: center; }
+.about-desc, .about-security-box-fixed p, .privacy-conduct-box p { font-size: 15px; color: #cbd5e1; line-height: 1.6; text-align: left; }
+.about-security-box-fixed h4, .privacy-conduct-box h4, .help-form-container h4 { font-size: 16px; font-weight: 700; color: #00f2fe; margin: 0 0 12px 0; }
+.privacy-conduct-box h4 { color: #ef4444; }
+.about-rules-bullets, .privacy-bullets { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+.about-rules-bullets div, .privacy-bullets div { font-size: 14px; color: #94a3b8; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; }
+.help-form-container p { font-size: 13px; color: #94a3b8; margin: 0 0 16px 0; line-height: 1.4; text-align: center; }
+.help-input-grp { margin-bottom: 14px; display: flex; flex-direction: column; gap: 6px; width: 100%; text-align: left; }
+.help-input-grp label { font-size: 13px; color: #cbd5e1; font-weight: 500; }
+.help-input-grp input, .help-input-grp textarea { width: 100%; padding: 12px; background-color: #1f2937; border: 1px solid #374151; border-radius: 10px; color: #fff; outline: none; box-sizing: border-box; }
+.help-input-grp textarea { height: 120px; resize: none; font-size: 14px; }
+.help-back-btn { width: 100%; max-width: 360px; padding: 14px; background-color: #1e293b; color: #e2e8f0; border: 1px solid #334155; margin-top: 10px; }
+.floating-action-btn {
+    position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px;
+    background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    border: none; border-radius: 50%; color: #fff; font-size: 24px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 114, 255, 0.4); z-index: 90;
+}
+.logout-overlay { display: none; align-items: center; justify-content: center; z-index: 200; }
+.logout-modal-box { background-color: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 24px; width: 85%; max-width: 320px; text-align: center; box-sizing: border-box; }
+.logout-modal-box h4 { font-size: 18px; font-weight: 700; color: #fff; margin: 0 0 10px 0; }
+.logout-modal-box p { font-size: 14px; color: #94a3b8; margin: 0 0 24px 0; line-height: 1.4; }
+.logout-btn-group { display: flex; gap: 12px; justify-content: center; }
+.logout-btn-no { flex: 1; padding: 12px; background-color: #1f2937; border: 1px solid #374151; color: #cbd5e1; border-radius: 10px; font-weight: 600; cursor: pointer; }
+.logout-btn-yes { flex: 1; padding: 12px; background: linear-gradient(90deg, #ef4444, #dc2626); border: none; color: #fff; border-radius: 10px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); }
+
+
+/* --- ওয়েলকাম স্ক্রিনের নতুন গুগল বাটন ডিজাইন --- */
+.btn-google-welcome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+  background-color: #ffffff; /* খাঁটি প্রফেশনাল সাদা ব্যাকগ্রাউন্ড */
+  color: #1e293b; /* স্লিক ডার্ক টেক্সট */
+  border: 1px solid #e2e8f0;
+  border-radius: 25px; /* আপনার Create New Account বাটনের সাথে ম্যাচিং রাউন্ড বর্ডার */
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.btn-google-welcome:hover {
+  background-color: #f8fafc; /* হোভার করলে হালকা প্রিমিয়াম গ্রে শেড */
+}
+
+.btn-google-welcome:active {
+  transform: scale(0.98); /* ক্লিক করলে সামান্য ডেবে যাওয়ার সুন্দর অ্যানিমেশন */
+}
+
+
+
+/* --- সাইন আপ ইনপুট বক্সের ভেতরে আইকন সেট করার সিএসএস --- */
+.custom-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.custom-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 1.1rem;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* আপনার ইনপুট বক্সের ভেতরের প্যাডিং এবং ডিজাইন টিউনিং */
+.custom-input-group input {
+  width: 100%;
+  padding: 14px 14px 14px 44px !important; /* বামপাশে ৪৪ পিক্সেল স্পেস দেওয়া হয়েছে যাতে লেখার ওপর আইকন না বসে */
+  background-color: #1e293b !important;
+  border: 1px solid #334155 !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  font-size: 1rem;
+  outline: none;
+}
+
+.custom-input-group input:focus {
+  border-color: #3b82f6 !important; /* ফোকাস করলে গ্লোয়িং ব্লু বর্ডার আসবে */
+}
+
+/* --- ক্রিয়েট অ্যাকাউন্ট পেজের গুগল বাটন রি-ডিজাইন --- */
+.btn-custom-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px;
+  background-color: #ffffff !important; /* প্রিমিয়াম হোয়াইট ব্যাকগ্রাউন্ড */
+  color: #1e293b !important; /* ডার্ক টেক্সট */
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s ease;
+}
+
+.btn-custom-google:hover {
+  background-color: #f1f5f9 !important;
+}
+
+.custom-google-img {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+}
+
+/* ডিভাইডার ওআর (OR) লাইন */
+.custom-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #64748b;
+  margin: 20px 0 10px 0;
+  font-size: 0.85rem;
+}
+.custom-divider::before, .custom-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #334155;
+}
+.custom-divider:not(:empty)::before { margin-right: .5em; }
+.custom-divider:not(:empty)::after { margin-left: .5em; }
+
+
+
+
+/* Context Menu & Action Buttons Styling */
+.menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+#msgContextMenu button {
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#msgContextMenu button:active {
+  transform: scale(0.98);
+}
+
+#msgContextMenu button:hover {
+  filter: brightness(1.1);
+}
+
+/* Red Delete Chat Button Specific Hover */
+#msgContextMenu button[onclick*="executeDeleteChat"]:hover {
+  background-color: rgba(185, 28, 28, 0.2) !important;
+}
+
+
+
+/* Realtime Status & Messenger Seen Indicator */
+.seen-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-top: 2px;
+  align-self: flex-end;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.status-checkmark {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-left: 4px;
+}
+
+
+
+/* Inbox Right Side Status (Messenger Style) */
+.inbox-chat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+}
+
+.inbox-status-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+}
+
+.inbox-status-check {
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: bold;
+}
+
+.inbox-seen-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.online-indicator {
+  width: 10px;
+  height: 10px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  border: 2px solid #0f172a;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+}
+
+
+
+/* Avatar container position for green dot */
+.avatar-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Inbox Status Right Container */
+.inbox-chat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inbox-status-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  margin-left: 8px;
+}
+
+.inbox-status-check {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.inbox-seen-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.online-indicator {
+  width: 10px;
+  height: 10px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  border: 2px solid #0f172a;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
