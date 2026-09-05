@@ -1507,3 +1507,69 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 1500);
 });
+
+
+
+
+
+
+// Smart Pull to Refresh (Without Page Reload/Logout)
+(function() {
+  let startY = 0;
+  let currentY = 0;
+  let isPulling = false;
+  const ptrElement = document.getElementById('pullToRefresh');
+
+  window.addEventListener('touchstart', (e) => {
+    if (window.scrollY === 0) {
+      startY = e.touches[0].clientY;
+      isPulling = true;
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isPulling) return;
+    currentY = e.touches[0].clientY;
+    const distance = currentY - startY;
+
+    if (distance > 0 && window.scrollY === 0) {
+      if (distance < 120 && ptrElement) {
+        ptrElement.style.top = `${distance - 50}px`;
+      }
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    if (!isPulling) return;
+    const distance = currentY - startY;
+    
+    if (distance > 70 && window.scrollY === 0) {
+      if (ptrElement) ptrElement.style.top = '20px';
+      
+      // 🟢 পেজ রিলোড না করে শুধু ডাটা আপডেট করা
+      setTimeout(() => {
+        // ১. যদি ইনবক্সে থাকে
+        if (typeof window.loadActiveChats === 'function') {
+          window.loadActiveChats();
+        }
+        
+        // ২. যদি কোনো চ্যাট ওপেন থাকে, তার স্ট্যাটাস রিফ্রেশ
+        if (window.activeChatUserId && typeof window.listenToUserStatus === 'function') {
+          window.listenToUserStatus(window.activeChatUserId);
+        }
+        
+        // লোডিং এনিমেশন বন্ধ করা
+        setTimeout(() => {
+          if (ptrElement) ptrElement.style.top = '-60px';
+        }, 300);
+      }, 800);
+    } else {
+      if (ptrElement) ptrElement.style.top = '-60px';
+    }
+
+    startY = 0;
+    currentY = 0;
+    isPulling = false;
+  });
+})();
+      
